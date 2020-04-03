@@ -10,9 +10,11 @@ def pesquisaAmbientalLinha2Diario(data):
         print("Database connection made!")
         cursor = db_connection.cursor()
         cursor.callproc("PesquisaAmbientalLinha2Diario", [f'{data}',])
-        for result in cursor.stored_results():
-            print(result.fetchall())
 
+        for result in cursor.stored_results():
+            # print(result.fetchall())
+            for i in result:
+                print(i)
         print("ok")
 
     except mysql.connector.Error as error:
@@ -25,7 +27,34 @@ def pesquisaAmbientalLinha2Diario(data):
     else:
         db_connection.close()
 
+def pesquisaAmbientalLinha2_LME():
+    try:
+        db_connection = mysql.connector.connect(host='10.10.10.200', user='root', password='sa',
+                                                database='nideal')
+        print("Database connection made!")
+        cursor = db_connection.cursor()
+        cursor.callproc("PesquisaAmbientalLinha2_LME", [])
+
+        for result in cursor.stored_results():
+            # print(result.fetchall())
+            for i in result:
+                print(i)
+        print("ok")
+
+    except mysql.connector.Error as error:
+        if error.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database doesn't exist")
+        elif error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("User name or password is wrong")
+        else:
+            print(error)
+    else:
+        db_connection.close()
+
+
+
 if __name__ == "__main__":
-    pesquisaAmbientalLinha2Diario('2020-03-24')
+    pesquisaAmbientalLinha2Diario('2020-04-01')
+    # pesquisaAmbientalLinha2_LME()
 
 
