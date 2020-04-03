@@ -1,10 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-# SELECT PARA LIMITES MÉDIOS DIÁRIOS
-# SELECT CO, NOX, THC, OPAC, SO2 FROM ambientallinha2_lme;
 
-def pesquisaAmbientalLinha2Diario(data):
+def pesquisa_ambiental_linha2_diario(data):
     try:
         db_connection = mysql.connector.connect(host='10.10.10.200', user='root', password='sa', database='nideal')
         print("Database connection made!")
@@ -27,7 +25,8 @@ def pesquisaAmbientalLinha2Diario(data):
     else:
         db_connection.close()
 
-def pesquisaAmbientalLinha2_LME():
+
+def pesquisa_ambiental_linha2_lme():
     try:
         db_connection = mysql.connector.connect(host='10.10.10.200', user='root', password='sa',
                                                 database='nideal')
@@ -52,9 +51,34 @@ def pesquisaAmbientalLinha2_LME():
         db_connection.close()
 
 
+def pesquisa_ambiental_linha2_diario_total(data):
+    try:
+        db_connection = mysql.connector.connect(host='10.10.10.200', user='root', password='sa',
+                                                database='nideal')
+        print("Database connection made!")
+        cursor = db_connection.cursor()
+        cursor.callproc("PesquisaAmbientalLinha2Diario_Total", [f'{data}',])
+
+        for result in cursor.stored_results():
+            # print(result.fetchall())
+            for i in result:
+                print(i)
+        print("ok")
+
+    except mysql.connector.Error as error:
+        if error.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database doesn't exist")
+        elif error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("User name or password is wrong")
+        else:
+            print(error)
+    else:
+        db_connection.close()
+
 
 if __name__ == "__main__":
-    pesquisaAmbientalLinha2Diario('2020-04-01')
-    # pesquisaAmbientalLinha2_LME()
+    # pesquisa_ambiental_linha2_diario('2020-04-01')
+    # pesquisa_ambiental_linha2_lme()
+    pesquisa_ambiental_linha2_diario_total('2020-04-01')
 
 
