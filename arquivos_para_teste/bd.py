@@ -89,6 +89,18 @@ class ConectorBD:
         self.desconectar()
 
 
+def pesquisa_ambiental_linha2_mensal_total(self, data):
+    self.conectar()
+    self._cursor.callproc("PesquisaAmbientalLinha2Mensal_Total", [f'{data}',])
+
+    for result in self._cursor.stored_results():
+        # print(result.fetchall())
+        for i in result:
+            print(i)
+
+    self.desconectar()
+
+
 if __name__ == "__main__":
     con = ConectorBD()
     # con.conectar()
@@ -101,4 +113,7 @@ if __name__ == "__main__":
     # con.pesquisa_ambiental_linha2_diario_total('2020-04-06')
         # SEGUNDA PLANÍLHA LINHA 2 - MENSAL
     # con.pesquisa_ambiental_linha2_mensal('2020-03-01')
-    con.pesquisa_ambiental_linha2_estatistica_lme('2020-03-01 00:00:00', '2020-03-31 23:59:59')
+    # con.pesquisa_ambiental_linha2_estatistica_lme('2020-03-01 00:00:00', '2020-03-31 23:59:59')
+    # con.pesquisa_ambiental_linha2_diario_total('2020-02-01')
+
+    # DIFERENÇA DE 1 HORA ENTRE RESULTADO REMOTO E LOCAL DA QUERY
