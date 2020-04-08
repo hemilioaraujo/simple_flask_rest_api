@@ -9,8 +9,13 @@ class ConectorBD:
 
     def conectar(self):
         try:
-            conn = mysql.connector.connect(host='10.10.10.200', user='root', password='sa',
-                                                    database='nideal')
+            conn = mysql.connector.connect(
+                host='10.10.10.200',
+                user='root',
+                password='sa',
+                database='nideal'
+            )
+
             self._conexao = conn
             self._cursor = conn.cursor()
             print('Conectado!')
@@ -89,16 +94,26 @@ class ConectorBD:
         self.desconectar()
 
 
-def pesquisa_ambiental_linha2_mensal_total(self, data):
-    self.conectar()
-    self._cursor.callproc("PesquisaAmbientalLinha2Mensal_Total", [f'{data}',])
+    def pesquisa_ambiental_linha2_mensal_total(self, data):
+        self.conectar()
+        self._cursor.callproc("PesquisaAmbientalLinha2Mensal_Total", [f'{data}',])
 
-    for result in self._cursor.stored_results():
-        # print(result.fetchall())
-        for i in result:
-            print(i)
+        for result in self._cursor.stored_results():
+            # print(result.fetchall())
+            for i in result:
+                print(i)
 
-    self.desconectar()
+        self.desconectar()
+
+
+    def select_now(self):
+        self.conectar()
+        self._cursor.execute("select now();")
+
+        for result in self._cursor:
+            print(result)
+
+        self.desconectar()
 
 
 if __name__ == "__main__":
@@ -114,6 +129,6 @@ if __name__ == "__main__":
         # SEGUNDA PLANÍLHA LINHA 2 - MENSAL
     # con.pesquisa_ambiental_linha2_mensal('2020-03-01')
     # con.pesquisa_ambiental_linha2_estatistica_lme('2020-03-01 00:00:00', '2020-03-31 23:59:59')
-    # con.pesquisa_ambiental_linha2_diario_total('2020-02-01')
-
+    con.pesquisa_ambiental_linha2_diario_total('2020-02-01')
+    # con.select_now()
     # DIFERENÇA DE 1 HORA ENTRE RESULTADO REMOTO E LOCAL DA QUERY
