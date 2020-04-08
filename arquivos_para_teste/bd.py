@@ -129,6 +129,6 @@ if __name__ == "__main__":
         # SEGUNDA PLANÍLHA LINHA 2 - MENSAL
     # con.pesquisa_ambiental_linha2_mensal('2020-03-01')
     # con.pesquisa_ambiental_linha2_estatistica_lme('2020-03-01 00:00:00', '2020-03-31 23:59:59')
-    con.pesquisa_ambiental_linha2_diario_total('2020-02-01')
+    con.pesquisa_ambiental_linha2_mensal_total('2020-02-01')
     # con.select_now()
     # DIFERENÇA DE 1 HORA ENTRE RESULTADO REMOTO E LOCAL DA QUERY
